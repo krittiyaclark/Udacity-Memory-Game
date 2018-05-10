@@ -3,6 +3,22 @@ let card = document.getElementsByClassName("card");
 let cards = [...card]
 console.log(cards);
 
+// Flipping cards
+function flippingCards() {
+	for (let i = 0; i < cards.length; i++) {
+		cards = cards[i];
+		cards.addEvenListener("click", showCards);
+	}
+}
+
+// Show Cards
+let showCards = function() {
+	let element = document.getElementsByClassName(".card");
+    element.classList.add("open");
+    element.classList.add("show");
+    element.classList.add("disable");
+}
+
 // Select deck
 let deck = document.querySelector(".deck");
 
@@ -10,14 +26,6 @@ let deck = document.querySelector(".deck");
 
 // Shuffle cards
 cards.sort(function() { return 0.5 - Math.random() });
-
-// Flipping cards
-function flippingCards() {
-	for (let i = 0; i < cards.length; i++) {
-		cards[i].addEvenListener("click", showCards(e));
-		e.preventDefault();
-	}
-}
 
 // What happens when cards match
 // What happens when cards do not match
@@ -37,4 +45,5 @@ function overlay() {
 	// }
 }
 
+flippingCards();
 overlay();
