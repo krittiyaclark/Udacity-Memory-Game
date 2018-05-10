@@ -1,5 +1,8 @@
 // Select cards
 let card = document.getElementsByClassName("card");
+// Select deck
+let deck = document.querySelector(".deck");
+
 let cards = [...card]
 console.log(cards);
 
@@ -7,25 +10,23 @@ console.log(cards);
 function flippingCards() {
 	for (let i = 0; i < cards.length; i++) {
 		cards = cards[i];
-		cards.addEvenListener("click", showCards);
+		cards.sort(function() { return 0.5 - Math.random() });
 	}
 }
 
-// Show Cards
-let showCards = function() {
-	let element = document.getElementsByClassName(".card");
-    element.classList.add("open");
-    element.classList.add("show");
-    element.classList.add("disable");
-}
+// Showing cards
+card.addEvenListener("click", function(e) {
+	e.preventDefault();
 
-// Select deck
-let deck = document.querySelector(".deck");
+	card.classList.add("open");
+	card.classList.add("show");
+	card.classList.add("disable");
+});
 
 
 
 // Shuffle cards
-cards.sort(function() { return 0.5 - Math.random() });
+// cards.sort(function() { return 0.5 - Math.random() });
 
 // What happens when cards match
 // What happens when cards do not match
