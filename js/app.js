@@ -12,6 +12,13 @@ let deck = document.querySelector(".deck");
 cards.sort(function() { return 0.5 - Math.random() });
 
 // Flipping cards
+function flippingCards() {
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].addEvenListener("click", showCards(e));
+		e.preventDefault();
+	}
+}
+
 // What happens when cards match
 // What happens when cards do not match
 // When the game finishes
