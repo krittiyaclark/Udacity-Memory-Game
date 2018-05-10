@@ -1,4 +1,16 @@
+// Select cards
+let card = document.getElementsByClassName("card");
+let cards = [...card]
+console.log(cards);
+
+// Select deck
+let deck = document.querySelector(".deck");
+
+
+
 // Shuffle cards
+cards.sort(function() { return 0.5 - Math.random() });
+
 // Flipping cards
 // What happens when cards match
 // What happens when cards do not match
