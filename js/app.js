@@ -12,28 +12,45 @@ console.log(cards);
  *  Add class to the cards
  */
 
-function flippingCards() {
+function addClass() {
 	for (let i = 0; i < cards.length; i++) {
-		cards = cards[i];
-
-		cards.addEventListener("click", function(e) {
-			e.preventDefault();
-			console.log("Work!");
-
-			this.classList.add("open");
-			this.classList.add("show");
-			this.classList.add("disable");
-		});
+		cardIndex = cards[i];
+		
+		cardIndex.addEventListener("click", showCard);
 	}
 }
 
 // Showing cards
-// Flipping cards
+let showCard = function() {
+	
+	console.log("Work!");
 
 
+	this.classList.toggle("open");
+	this.classList.toggle("show");
+	this.classList.toggle("disable");
+};
 
 // Shuffle cards
-cards.sort(function() { return 0.5 - Math.random() });
+function shuffle(arra1) {
+    let ctr = arra1.length;
+    let temp;
+    let index;
+
+    // While there are elements in the array
+    while (ctr > 0) {
+// Pick a random index
+        index = Math.floor(Math.random() * ctr);
+// Decrease ctr by 1
+        ctr--;
+// And swap the last element with it
+        temp = arra1[ctr];
+        arra1[ctr] = arra1[index];
+        arra1[index] = temp;
+    }
+    return arra1;
+}
+
 
 // What happens when cards match
 // What happens when cards do not match
@@ -53,5 +70,7 @@ function overlay() {
 	// }
 }
 
-flippingCards();
+addClass();
+shuffle(cards);
+showCard();
 overlay();
