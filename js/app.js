@@ -1,32 +1,39 @@
 // Select cards
-let card = document.getElementsByClassName("card");
+let card = document.querySelectorAll(".card");
 // Select deck
 let deck = document.querySelector(".deck");
 
 let cards = [...card]
 console.log(cards);
 
-// Flipping cards
+/*
+ * Loop all cards
+ * A click card function
+ *  Add class to the cards
+ */
+
 function flippingCards() {
 	for (let i = 0; i < cards.length; i++) {
 		cards = cards[i];
-		cards.sort(function() { return 0.5 - Math.random() });
+
+		cards.addEventListener("click", function(e) {
+			e.preventDefault();
+			console.log("Work!");
+
+			this.classList.add("open");
+			this.classList.add("show");
+			this.classList.add("disable");
+		});
 	}
 }
 
 // Showing cards
-card.addEvenListener("click", function(e) {
-	e.preventDefault();
-
-	card.classList.add("open");
-	card.classList.add("show");
-	card.classList.add("disable");
-});
+// Flipping cards
 
 
 
 // Shuffle cards
-// cards.sort(function() { return 0.5 - Math.random() });
+cards.sort(function() { return 0.5 - Math.random() });
 
 // What happens when cards match
 // What happens when cards do not match
