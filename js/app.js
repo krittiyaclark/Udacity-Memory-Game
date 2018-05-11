@@ -4,13 +4,6 @@ let card = document.querySelectorAll(".card");
 let deck = document.querySelector(".deck");
 
 /*
- * Loop all cards
- * A click card function
- *  Add class to the cards
- */
-
-
-/*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
@@ -54,49 +47,30 @@ function displayCards() {
 	            "fa-bomb"
 	        ];
 
-	        card = "";
+	        // Add each card's HTML to the page
+		    console.log(shuffle(cardFaces)); 
+		    cardFaces = shuffle(cardFaces); 
+	        cardUi = "";
 	        for (let cardFace of cardFaces) {
-		      	card += (`<li class="card"><i class="fa ${cardFace}"></i></li>`);
+		      	cardUi += `<li class="card"><i class="fa ${cardFace}"></i></li>`;
 		    
 		    }
+  
 
-		    deck.innerHTML = card;	
+		    deck.innerHTML = cardUi;	
 		    deck.addEventListener("click", function(e) {
 		    	if(e.target && e.target.nodeName == "LI") {
 			      console.log('Color Work!');
 			      
 			      e.target.classList.add("show", "open");
-			      // e.target.appendChild(cardFace);
 			    }
-				// Showing cards
-				// this.classList.add("open");
-				// this.classList.add("show");
-				// this.classList.add("disable");
-
+				
 			});
-		    shuffle(cardFaces);
-		    console.log(shuffle(cardFaces));    
+		    
 	}
 
 	cardIcons();
 }
-	// Add each card's HTML to the page
-	// function addClass() {
-	// 	for (let i = 0; i < card.length; i++) {
-	// 		cardIndex = card[i];
-
-	// 		cardIndex.addEventListener("click", function() {
-	// 			// Showing cards
-	// 			this.classList.toggle("open");
-	// 			this.classList.toggle("show");
-	// 			this.classList.toggle("disable");
-
-	// 		});
-	// 	}
-	// 	addClass();
-	// }
-
-
 
 displayCards();
 // What happens when cards match
