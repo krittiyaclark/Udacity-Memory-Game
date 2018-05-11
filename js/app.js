@@ -17,21 +17,7 @@ let deck = document.querySelector(".deck");
  *   - add each card's HTML to the page
  */
 
-function addClass() {
-	for (let i = 0; i < card.length; i++) {
-		cardIndex = card[i];
-
-		card = [...card];
-		// console.log(card);
-		cardIndex.addEventListener("click", function() {
-			// Showing cards
-			this.classList.toggle("open");
-			this.classList.toggle("show");
-			this.classList.toggle("disable");
-
-		});
-	}
-
+function displayCards() {
 	// Shuffle function from http://stackoverflow.com/a/2450976
 	function shuffle(array) {
 	    var currentIndex = array.length, temporaryValue, randomIndex;
@@ -46,11 +32,73 @@ function addClass() {
 
 	    return array;
 	}
+	
+	// Loop through each card and create its HTML
+	function cardIcons() {
+	        let cardFaces = [
+	            "fa-diamond",
+	            "fa-paper-plane-o",
+	            "fa-anchor",
+	            "fa-bolt",
+	            "fa-cube",
+	            "fa-leaf",
+	            "fa-bicycle",
+	            "fa-bomb",
+	            "fa-diamond",
+	            "fa-paper-plane-o",
+	            "fa-anchor",
+	            "fa-bolt",
+	            "fa-cube",
+	            "fa-leaf",
+	            "fa-bicycle",
+	            "fa-bomb"
+	        ];
 
-	console.log(shuffle(card));
-	shuffle(card);
+	        card = "";
+	        for (let cardFace of cardFaces) {
+		      	card += (`<li class="card"><i class="fa ${cardFace}"></i></li>`);
+		    
+		    }
+
+		    deck.innerHTML = card;	
+		    deck.addEventListener("click", function(e) {
+		    	if(e.target && e.target.nodeName == "LI") {
+			      console.log('Color Work!');
+			      
+			      e.target.classList.add("show", "open");
+			      // e.target.appendChild(cardFace);
+			    }
+				// Showing cards
+				// this.classList.add("open");
+				// this.classList.add("show");
+				// this.classList.add("disable");
+
+			});
+		    shuffle(cardFaces);
+		    console.log(shuffle(cardFaces));    
+	}
+
+	cardIcons();
 }
+	// Add each card's HTML to the page
+	// function addClass() {
+	// 	for (let i = 0; i < card.length; i++) {
+	// 		cardIndex = card[i];
 
+	// 		cardIndex.addEventListener("click", function() {
+	// 			// Showing cards
+	// 			this.classList.toggle("open");
+	// 			this.classList.toggle("show");
+	// 			this.classList.toggle("disable");
+
+	// 		});
+	// 	}
+	// 	addClass();
+	// }
+
+
+
+displayCards();
 // What happens when cards match
 // What happens when cards do not match
 // When the game finishes
@@ -69,7 +117,6 @@ function overlay() {
 	// }
 }
 
-addClass();
 overlay();
 
 /*
