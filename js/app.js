@@ -3,54 +3,53 @@ let card = document.querySelectorAll(".card");
 // Select deck
 let deck = document.querySelector(".deck");
 
-let cards = [...card]
-console.log(cards);
-
 /*
  * Loop all cards
  * A click card function
  *  Add class to the cards
  */
 
+
+/*
+ * Display the cards on the page
+ *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - loop through each card and create its HTML
+ *   - add each card's HTML to the page
+ */
+
 function addClass() {
-	for (let i = 0; i < cards.length; i++) {
-		cardIndex = cards[i];
-		
-		cardIndex.addEventListener("click", showCard);
+	for (let i = 0; i < card.length; i++) {
+		cardIndex = card[i];
+
+		card = [...card];
+		// console.log(card);
+		cardIndex.addEventListener("click", function() {
+			// Showing cards
+			this.classList.toggle("open");
+			this.classList.toggle("show");
+			this.classList.toggle("disable");
+
+		});
 	}
+
+	// Shuffle function from http://stackoverflow.com/a/2450976
+	function shuffle(array) {
+	    var currentIndex = array.length, temporaryValue, randomIndex;
+
+	    while (currentIndex !== 0) {
+	        randomIndex = Math.floor(Math.random() * currentIndex);
+	        currentIndex -= 1;
+	        temporaryValue = array[currentIndex];
+	        array[currentIndex] = array[randomIndex];
+	        array[randomIndex] = temporaryValue;
+	    }
+
+	    return array;
+	}
+
+	console.log(shuffle(card));
+	shuffle(card);
 }
-
-// Showing cards
-let showCard = function() {
-	
-	console.log("Work!");
-
-
-	this.classList.toggle("open");
-	this.classList.toggle("show");
-	this.classList.toggle("disable");
-};
-
-// Shuffle cards
-function shuffle(arra1) {
-    let ctr = arra1.length;
-    let temp;
-    let index;
-
-    // While there are elements in the array
-    while (ctr > 0) {
-// Pick a random index
-        index = Math.floor(Math.random() * ctr);
-// Decrease ctr by 1
-        ctr--;
-// And swap the last element with it
-        temp = arra1[ctr];
-        arra1[ctr] = arra1[index];
-        arra1[index] = temp;
-    }
-    return arra1;
-}
-
 
 // What happens when cards match
 // What happens when cards do not match
@@ -71,6 +70,15 @@ function overlay() {
 }
 
 addClass();
-shuffle(cards);
-showCard();
 overlay();
+
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
