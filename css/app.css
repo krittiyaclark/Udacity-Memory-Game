@@ -79,6 +79,11 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+
+    animation-name: rubberBand;
+    -webkit-backface-visibility: visible !important;
+    backface-visibility: visible !important;
+    animation-duration: .75s;
 }
 
 /*
