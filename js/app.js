@@ -1,28 +1,31 @@
 // Select cards
-let card = document.querySelectorAll(".card");
+//let card = document.querySelectorAll(".card");
 // Select deck
 let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
+// Select move
+const move = document.querySelector('.moves');
+// Select stars
+let star = document.querySelectorAll('.stars li i');
 // Open cards array
 let openCards = [];
-let showCards = [];
 // Set match
 let match = 0;
 // User stars
-let stars = 3;
-// User move
-let move = 0;
-// Count click
+let threeStars = 3;
+// User click
 let click = 0;
+// User move
+let moves = 0;
 // Icon array
 let cardFaces = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond",
 		         "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
 
 
-function load () {
-	playGame();
+
+playGame();
 	/*
 	 * Display the cards on the page
 	 *   - shuffle the list of cards using the provided "shuffle" method below
@@ -32,13 +35,14 @@ function load () {
 
 // Loop through each card and create its HTML
 function cardIcons() {
+	// Clear deck
+	deck.innerHTML = "";
     // Add each card's HTML to the page
     cardUi = "";
     for (let cardFace of cardFaces) {
         cardUi += `<li class="card"><i class="fa ${cardFace}"></i></li>`;
-    
     }
-    deck.innerHTML = cardUi;	
+    deck.innerHTML = cardUi;
 }
 	
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -55,58 +59,64 @@ function shuffle(array) {
 
     return array;
 }
-
-// Open cards
-// function open(c) {
-// 	openCards.push(this);
-// 	let cardLen = openCards.length;
-// 	if(openCards[0] === openCards[1]) {
-//     	showCards[0].classList.add("match");
-//     	showCards[1].classList.add("match");
-
-//     }
-// }
 		
 // Event lister to deck
 deck.addEventListener("click", function(e) {
+	startTimer();
 	if(e.target.classList.contains("open")) {
 		return;
 	}
-	// Check if click = 2 
+	// Check if moves = 2 
 	if(click < 2) {
-		if(e.target && e.target.nodeName == "LI") {
-	      console.log('Work!');
-	      click += 1;
-	      e.target.classList.add("show");
-		  e.target.classList.add("open");
-		  openCards.push(e.target);
-		  console.log(openCards);
-	     
+		if(e.target && e.target.nodeName === "LI") {
+	        console.log('Work!');
+	        click += 1;
+	        e.target.classList.add("show");
+			e.target.classList.add("open");	
+		    // Push open cards to array
+		    openCards.push(e.target);
+		    console.log(openCards);
+		    if(click === 2) {
+		    	moveCount();
+		    }
+	    }
+	    if(openCards[0] === openCards[1]) {
+	    	showCards[0].classList.add("match");
+			showCards[1].classList.add("match");
+			matchCount();
 	    }
     }
 
-    // if(openCards.length != 2 && e.target.className === "card open show" && showCards.length != 2) {
-    //     openCards.push(e.target.childNodes[0].className);
-    //     showCards.push(e.target);
-    //     console.log(openCards);
-    // }
-
-    // if(showCards[0] === showCards[1]) {
-    // 	showCards[0].classList.add("match");
-    // 	showCards[1].classList.add("match");
-
-    // }
 	
 });
 
-			    
+function matchCount() {
+	match += 1;
+}
+
+function moveCount() {
+    moves += 1;
+    move.innerHTML = moves;
+
+    for (let i = 0; i < star.length; i++) {
+    	if(moves === 15) {
+    		let threeStars = star -= 1;
+        }
+        else if(moves === 30) {
+    		let threeStars = star -= 1;
+        }
+    }
+}
+
 // PlayGame: Call most functions here
 function playGame() {
-	startTimer();
+	//startTimer();
 	shuffle(cardFaces); 
 	console.log(shuffle(cardFaces));
 	cardIcons();
-	// open();
+	matchCount();
+	moveCount();
+	move.innerHTML = moves;
 	
 }
 
@@ -132,31 +142,21 @@ function stopTimer() {
 	target.innerHTML = `${"0 : 0"}`;
 }
 
-// Check matched cards
-function matched(){
-	if(choice[0].dataset.value !== choice[1].dataset.value) {
-		unmatched();
-	} else {
-		won();
-	}
-}
-
 // Show/Hide overlay
-function won() {
-	let ele =  document.querySelector(".overlay");
+// function won() {
+// 	let ele =  document.querySelector(".overlay");
 
-	if (matched == false) {
-		ele.style.display = "block";
-    	ele.style.display = "none";
-	}
-	else {
-		ele.style.display = "block";
-	}
-}
+// 	if (matched == false) {
+// 		ele.style.display = "block";
+//     	ele.style.display = "none";
+// 	}
+// 	else {
+// 		ele.style.display = "block";
+// 	}
+// }
 
-won();
-}
-document.addEventListener('DOMContentLoaded', load);
+// won();
+
 
 
 
