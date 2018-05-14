@@ -57,15 +57,15 @@ function shuffle(array) {
 }
 
 // Open cards
-function open(c) {
-	openCards.push(this);
-	let cardLen = openCards.length;
-	if(openCards[0] === openCards[1]) {
-    	showCards[0].classList.add("match");
-    	showCards[1].classList.add("match");
+// function open(c) {
+// 	openCards.push(this);
+// 	let cardLen = openCards.length;
+// 	if(openCards[0] === openCards[1]) {
+//     	showCards[0].classList.add("match");
+//     	showCards[1].classList.add("match");
 
-    }
-}
+//     }
+// }
 		
 // Event lister to deck
 deck.addEventListener("click", function(e) {
@@ -79,6 +79,8 @@ deck.addEventListener("click", function(e) {
 	      click += 1;
 	      e.target.classList.add("show");
 		  e.target.classList.add("open");
+		  openCards.push(e.target);
+		  console.log(openCards);
 	     
 	    }
     }
@@ -104,7 +106,7 @@ function playGame() {
 	shuffle(cardFaces); 
 	console.log(shuffle(cardFaces));
 	cardIcons();
-	open();
+	// open();
 	
 }
 
