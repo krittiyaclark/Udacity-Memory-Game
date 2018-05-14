@@ -15,9 +15,9 @@ let match = 0;
 // User stars
 let threeStars = 3;
 // User click
-let click = 0;
+let clicks = 0;
 // User move
-let moves = 0;
+let moves = 0; 
 // Icon array
 let cardFaces = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond",
 		         "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
@@ -67,25 +67,37 @@ deck.addEventListener("click", function(e) {
 		return;
 	}
 	// Check if moves = 2 
-	if(click < 2) {
+	if(clicks < 2) {
 		if(e.target && e.target.nodeName === "LI") {
 	        console.log('Work!');
-	        click += 1;
+	        clicks += 1;
 	        e.target.classList.add("show");
 			e.target.classList.add("open");	
 		    // Push open cards to array
 		    openCards.push(e.target);
 		    console.log(openCards);
-		    if(click === 2) {
+		    if(clicks === 2) {
 		    	moveCount();
 		    }
 	    }
-	    if(openCards[0] === openCards[1]) {
-	    	showCards[0].classList.add("match");
-			showCards[1].classList.add("match");
-			matchCount();
-	    }
-    }
+	    if(openCards.length === 2) {
+		    if(openCards[0] === openCards[1]) {
+		    	e.target.classList.add("show");
+				e.target.classList.add("open");
+		    	showCards[0].classList.add("match");
+				showCards[1].classList.add("match");
+				matchCount();
+				openCards = [];
+		    } else if(openCards[0] != openCards[1]) {
+		    	e.target.classList.add("show");
+				e.target.classList.add("open");
+		    	showCards[0].classList.add("unmatched");
+		    	showCards[1].classList.add("unmatched");
+				openCards = [];
+		    }
+		}
+
+	}
 
 	
 });
@@ -120,6 +132,17 @@ function playGame() {
 	
 }
 
+function reset() {
+	playGame();
+	timer.innerHTML = 0;
+	moves = 0;
+	move.innerHTML = 0;
+	openCards = [];
+	match = 0;
+	threeStars = 3;
+	click = 0;
+	openCards = [];
+}
 // Start timer function
 function startTimer() {
 	let date = new Date();
