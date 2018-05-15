@@ -10,6 +10,7 @@ const move = document.querySelector('.moves');
 let star = document.querySelectorAll('.stars li i');
 // Open cards array
 let openCards = [];
+let shownCards = [];
 // Set match
 let match = 0;
 // User stars
@@ -35,8 +36,8 @@ playGame();
 
 // Loop through each card and create its HTML
 function cardIcons() {
-		// Clear deck
-		//deck.innerHTML = "";
+	// Clear deck
+	deck.innerHTML = "";
     // Add each card's HTML to the page
     cardUi = "";
     for (let cardFace of cardFaces) {
@@ -60,6 +61,7 @@ function shuffle(array) {
     return array;
 }
 
+
 function toggleCard(card) {
     card.classList.toggle("open");
     card.classList.toggle("show");
@@ -67,6 +69,38 @@ function toggleCard(card) {
 
 function openCard(card) {
     openCards.push(card);
+}
+
+// Handle Game Logic
+function handleGame(e) {
+	startTimer();
+  toggleCard(e.target);
+  // Push open cards to array
+  //openCards(e.target);
+  //console.log(openCards);
+	if(e.target.classList.contains("open")) {
+		return;
+	}
+	// Check if moves = 2
+	if(click < 2) {
+		if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
+	  	console.log('Work!');
+      click += 1;
+      toggleCard(e.target);
+		    if(click === 2) {
+		    	moveCount();
+		    }
+	    }
+      if(openCards.length != 2 && e.target.className === "card open show") {
+        openCards.push(e.target);
+        console.log(openCards);
+    }
+	    if(openCards[0] === openCards[1]) {
+	    	showCards[0].classList.add("match");
+			  showCards[1].classList.add("match");
+			  matchCount();
+	    }
+    }
 }
 
 function matchCount() {
@@ -96,7 +130,6 @@ function playGame() {
 	matchCount();
 	moveCount();
 	move.innerHTML = moves;
-    clearInterval(startTimer);
 
 }
 
@@ -120,36 +153,6 @@ function startTimer() {
 function stopTimer() {
 	clearInterval(startTimer);
 	target.innerHTML = `${"0 : 0"}`;
-}
-
-// Handle Game Logic
-function handleGame(e) {
-	startTimer();
-    toggleCard(e.target);
-	if(openCards >= 2 || e.target.classList.contains("open")) {
-		return;
-	}
-		if(e.target && e.target.className === "card") {
-	        console.log('Work!');
-	        click += 1;
-	        toggleCard();
-            openCards.push(e.target);
-            console.log(openCards);
-		    if(click === 2) {
-		    	moveCount();
-		    }
-	    }
-        if(openCards.length !== 2 && e.target.contains("card open show")) {
-            // Push open cards to array
-            openCards.push(e.target);
-            console.log(openCards);
-        }
-	    if(openCards[0] === openCards[1]) {
-	    	showCards[0].classList.add("match");
-			showCards[1].classList.add("match");
-			matchCount();
-	    }
-
 }
 
 // Deck on click
