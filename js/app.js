@@ -71,9 +71,13 @@ function openCard(card) {
 }
 
 function checkIfMatched(card) {
-  if(openedCards[0].firstElementChild.classList.item(1) === openedCards[1].firstElementChild.classList.item(1)) {
-    card.classList.toggle("match");
-    card.classList.toggle("disabled");
+  // let ifMatched = false;
+  for(let i = 0; i < openCards; i++) {
+    if(openedCards[0].firstElementChild.classList.item(1) === openedCards[1].firstElementChild.classList.item(1)) {
+      // ifMatched = true;
+      card.classList.toggle("match");
+      card.classList.toggle("disabled");
+    }
   }
 }
 
@@ -85,14 +89,14 @@ function checkIfNotMatched(card) {
 }
 
 // Handle Game Logic
-function handleGame(e) {
+// Deck on click
+deck.addEventListener("click", function (e) {
 	startTimer();
+  // Add open & show class to li
   toggleCard(e.target);
-  openCard(e.target);
   // Push open cards to array
-  //openCards(e.target);
-  //console.log(openCards);
-	// Check if moves = 2
+  openCard(e.target);
+
 	if(click < 2) {
 		if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
 	  	console.log('Work!');
@@ -107,12 +111,18 @@ function handleGame(e) {
         console.log(openCards);
     }
       // Check cards if matched
-	    if(openCards === 2) {
-	    	checkIfMatched();
-			  matchCount();
+	    if(openCards.length >= 2) {
+        if(checkIfMatched() === true) {
+          checkIfMatched();
+          matchCount();
+        }else {
+
+        }
+
 	    }
     }
-}
+
+});
 
 function matchCount() {
 	match += 1;
@@ -165,9 +175,6 @@ function stopTimer() {
 	clearInterval(startTimer);
 	target.innerHTML = `${"0 : 0"}`;
 }
-
-// Deck on click
-deck.addEventListener("click", handleGame);
 
 // Show/Hide overlay
 // function won() {
