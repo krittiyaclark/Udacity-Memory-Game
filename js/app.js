@@ -10,7 +10,6 @@ const move = document.querySelector('.moves');
 let star = document.querySelectorAll('.stars li i');
 // Open cards array
 let openCards = [];
-let shownCards = [];
 // Set match
 let match = 0;
 // User stars
@@ -63,41 +62,53 @@ function shuffle(array) {
 
 
 function toggleCard(card) {
-    card.classList.toggle("open");
-    card.classList.toggle("show");
+  card.classList.toggle("open");
+  card.classList.toggle("show");
 }
 
 function openCard(card) {
-    openCards.push(card);
+  openCards.push(card);
+}
+
+function checkIfMatched(card) {
+  if(openedCards[0].firstElementChild.classList.item(1) === openedCards[1].firstElementChild.classList.item(1)) {
+    card.classList.toggle("match");
+    card.classList.toggle("disabled");
+  }
+}
+
+function checkIfNotMatched(card) {
+  if(openedCards[0].firstElementChild.classList.item(1) !== openedCards[1].firstElementChild.classList.item(1)) {
+    card.classList.toggle("unmatch");
+    card.classList.toggle("disabled");
+  }
 }
 
 // Handle Game Logic
 function handleGame(e) {
 	startTimer();
   toggleCard(e.target);
+  openCard(e.target);
   // Push open cards to array
   //openCards(e.target);
   //console.log(openCards);
-	if(e.target.classList.contains("open")) {
-		return;
-	}
 	// Check if moves = 2
 	if(click < 2) {
 		if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
 	  	console.log('Work!');
       click += 1;
-      toggleCard(e.target);
 		    if(click === 2) {
 		    	moveCount();
 		    }
 	    }
+      // If cards isn't matched
       if(openCards.length != 2 && e.target.className === "card open show") {
-        openCards.push(e.target);
+        openCards.push(e.target.childNodes[0].className);
         console.log(openCards);
     }
-	    if(openCards[0] === openCards[1]) {
-	    	showCards[0].classList.add("match");
-			  showCards[1].classList.add("match");
+      // Check cards if matched
+	    if(openCards === 2) {
+	    	checkIfMatched();
 			  matchCount();
 	    }
     }
@@ -157,7 +168,6 @@ function stopTimer() {
 
 // Deck on click
 deck.addEventListener("click", handleGame);
-deck.addEventListener("click", openCard);
 
 // Show/Hide overlay
 // function won() {
