@@ -5,7 +5,7 @@ let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
 // Select move
-const move = document.querySelector('.moves');
+let move = document.querySelector('.moves');
 // Select stars
 let star = document.querySelectorAll('.stars li i');
 // Open cards array
@@ -19,6 +19,10 @@ let click = 0;
 // User move
 let moves = 0;
 // Icon array
+let hour = 0;
+let min = 0;
+let sec = 0;
+let interval;
 let cardFaces = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond",
 		         "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 
@@ -64,11 +68,10 @@ function shuffle(array) {
 function toggleCard(card) {
   card.classList.toggle("open");
   card.classList.toggle("show");
-  debugger
 }
 
 function openCard(card) {
-  openCards.push(card); debugger
+  openCards.push(card);
 }
 
 function checkIfMatched(card) {
@@ -84,125 +87,125 @@ function checkIfNotMatched(card) {
   if(openCards[0] !== openCards[1]) {
     card.classList.toggle("unmatch");
     card.classList.toggle("unmatch");
-    // card.classList.toggle("disabled");
   }
 }
 
 // Handle Game Logic
 // Deck on click
 deck.addEventListener("click", function (e) {
-	//startTimer();
+	startTimer();
+  // If it is not a card/open/match get out from a function
   if(!e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
     return;
   }
-  // Add open & show class to li
-  // toggleCard(e.target);
-  // Push open cards to array
-  //openCard(e.target);
 
+  openCards.push(e.target);
+  e.target.classList.add("open", "show");
+  moveCount();
 
-	 //if(click < 2) {
-		// if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
-	  // 	console.log('Work!');
-      // click += 1;
-		    //if(click === 2) {
-		    	//moveCount();
-		    //}
-
-      // If cards isn't matched
-      //if(openCards.length <= 2) {
-        openCards.push(e.target);
-        e.target.classList.add("open", "show");
-        moveCount();
-
-      //}
+    // Check cards is === 2
+    if(openCards.length === 2) {
       // Check cards if matched
-	    if(openCards.length === 2) {
-
-        if(openCards[0].firstElementChild.classList[1] === openCards[1].firstElementChild.classList[1]) {
-          debugger
-          //ifMatched = true;
-          openCards[0].classList.remove("open", "show");
-          openCards[1].classList.remove("open", "show");
-          openCards[0].classList.add("match", "disabled");
-          openCards[1].classList.add("match", "disabled");
-          openCards = [];
-          matchCount();
-        } else {
-          function closeCards() {
-
-
-            setTimeout(function(){
-              openCards[0].classList.remove("open", "show");
-              openCards[1].classList.remove("open", "show");
-              openCards = [];
-            }, 500);
-          }
-          closeCards();
+      if(openCards[0].firstElementChild.classList[1] === openCards[1].firstElementChild.classList[1]) {
+        // Add/remove class to a card
+        openCards[0].classList.remove("open", "show");
+        openCards[1].classList.remove("open", "show");
+        openCards[0].classList.add("match", "disabled");
+        openCards[1].classList.add("match", "disabled");
+        openCards = [];
+        matchCount();
+        console.log(matchCount);
+        // Check cards if not matched
+      } else {
+        function closeCards() {
+          // Set Timeout for slow a card from turning too fast
+          setTimeout(function(){
+            // Remove class to a card
+            openCards[0].classList.remove("open", "show");
+            openCards[1].classList.remove("open", "show");
+            openCards = [];
+          }, 500);
         }
-
-	    }
-    //}
-     //}
-
+        closeCards();
+      }
+    }
+    if(matchCount >= 8) {
+      setTimeout(function () {
+        stopTimer();
+      }, 500);
+    }
 });
 
+// Match count
 function matchCount() {
-	match += 1;
+	match++;
+  let ele =  document.querySelector(".overlay");
+  if(!match === 8) {
+    ele.style.display = "block";
+    ele.style.display = "none";
+  }
+  	else {
+  		ele.style.display = "block";
+  	}
 }
 
+// Move count
 function moveCount() {
-    moves += 1;
+    moves++;
     move.innerHTML = moves;
 
     for (let i = 0; i < star.length; i++) {
     	if(moves === 15) {
     		let threeStars = star -= 1;
-        }
+      }
         else if(moves === 30) {
-    		let threeStars = star -= 1;
+    		    let threeStars = star -= 1;
         }
     }
 }
 
 // PlayGame: Call most functions here
 function playGame() {
-	//startTimer();
+	//stopTimer();
 	shuffle(cardFaces);
 	console.log(shuffle(cardFaces));
 	cardIcons();
-	matchCount();
-	moveCount();
-	move.innerHTML = moves;
-
+  moves = 0;
+  move.innerHTML = 0;
+  match = 0;
+  hour = 0;
+  min = 0;
+  sec = 0;
+  timer.innerHTML = `${"0 : 0"}`;
+  clearInterval(interval);
 }
 
 // Start timer function
 function startTimer() {
-	let date = new Date();
-	let sec = date.getSeconds();
-	let min = date.getMinutes();
-
-	if (sec++ === 60) {
-		sec = 0;
-		if (min++ === 60) {
-			min = 0;
-		}
-	}
-	timer.innerHTML = min + " : " + sec;
-	//setInterval(startTimer, 1000);
+  interval = setInterval(function() {
+  	if (sec === 60) {
+      min++;
+  		sec = 0;
+  		if (min === 60) {
+        hour++;
+  			min = 0;
+  		}
+  	}
+  	timer.innerHTML = min + " : " + sec;
+    sec++;
+  }, 1000);
 }
 
 // Stop timer function
 function stopTimer() {
-	clearInterval(startTimer);
-	target.innerHTML = `${"0 : 0"}`;
+	clearInterval(interval);
+	timer.innerHTML = `${"0 : 0"}`;
 }
 
-// Show/Hide overlay
+// // Show/Hide overlay
 // function won() {
 // 	let ele =  document.querySelector(".overlay");
-
+//
 // 	if (matched == false) {
 // 		ele.style.display = "block";
 //     	ele.style.display = "none";
@@ -211,8 +214,13 @@ function stopTimer() {
 // 		ele.style.display = "block";
 // 	}
 // }
-
+//
 // won();
+
+matchCount();
+moveCount();
+
+
 
 
 
