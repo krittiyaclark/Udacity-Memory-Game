@@ -5,7 +5,8 @@ let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
 // Select move
-let move = document.querySelector('.moves');// User move
+let move = document.querySelector('.moves');
+// User move
 let moveCounter = 0;
 // Select stars
 let star = document.querySelectorAll(".fa-star");
@@ -15,8 +16,6 @@ let openCards = [];
 let matchCounter = 0;
 // User stars
 let threeStars = 3;
-// User click
-let click = 0;
 // Icon array
 let hour = 0;
 let min = 0;
@@ -50,6 +49,13 @@ function playGame() {
   min = 0;
   sec = 0;
   timer.innerHTML = `${"0 : 0"}`;
+
+  // reset rating
+  for (var i= 0; i < star.length; i++){
+      star[i].style.color = "#FFD700";
+      star[i].style.visibility = "visible";
+  }
+
   clearInterval(interval);
 }
 
@@ -117,7 +123,9 @@ deck.addEventListener("click", function (e) {
 
   openCards.push(e.target);
   e.target.classList.add("open", "show");
-  moveCount();
+  moveCounter++;
+  move.innerHTML = moveCounter;
+  startTimer();
 
     // Check cards is === 2
     if(openCards.length === 2) {
@@ -171,31 +179,52 @@ function matchCount() {
   	}
 }
 
-// Move count
-function moveCount() {
-    moveCounter++;
-    move.innerHTML = moveCounter;
-    console.log(moveCounter);
+matchCount();
 
-    if(moveCounter === 1) {
-      moveCounter = 0;
-      move.innerHTML = moveCounter;
-      matchCounter = 0;
-      startTimer();
+function starGame() {
+  if (moveCounter > 8 && moveCounter < 12){
+        for( i= 0; i < 3; i++){
+            if(i > 1){
+                star[i].style.visibility = "collapse";
+            }
+        }
     }
-
-    // for (let i = 0; i < star.length; i--) {
-    // 	if(moves === 15) {
-    // 		//let threeStars = star[i].splice(i, 1)
-    //     //threeStars = star[i].innerHTML
-    //   }
-    //     else if(moves === 30) {
-    // 		    //let threeStars = star[i] -= 1;
-    //         //star.innerHTML = threeStars;
-    //     }
-    //   //console.log(star[i]);
-    // }
+    else if (moveCounter > 13){
+        for( i= 0; i < 3; i++){
+            if(i > 0){
+                star[i].style.visibility = "collapse";
+            }
+        }
+    }3
 }
+
+starGame();
+// Move count
+// function moveCount() {
+//     moveCounter++;
+//     move.innerHTML = moveCounter;
+//     console.log(move);
+//
+//     startTimer();
+//     // if(moveCounter === 1) {
+//     //   moveCounter = 0;
+//     //   move.innerHTML = moveCounter;
+//     //   matchCounter = 0;
+//     // }
+//
+//     // for (let i = 0; i < star.length; i--) {
+//     // 	if(moves === 15) {
+//     // 		//let threeStars = star[i].splice(i, 1)
+//     //     //threeStars = star[i].innerHTML
+//     //   }
+//     //     else if(moves === 30) {
+//     // 		    //let threeStars = star[i] -= 1;
+//     //         //star.innerHTML = threeStars;
+//     //     }
+//     //   //console.log(star[i]);
+//     // }
+// }
+// moveCount();
 
 // Start timer function
 function startTimer() {
@@ -234,8 +263,6 @@ function stopTimer() {
 //
 // won();
 
-matchCount();
-moveCount();
 
 
 
