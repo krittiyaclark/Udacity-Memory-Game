@@ -5,19 +5,18 @@ let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
 // Select move
-let move = document.querySelector('.moves');
+let move = document.querySelector('.moves');// User move
+let moveCounter = 0;
 // Select stars
-let star = document.querySelectorAll('.stars li i');
+let star = document.querySelectorAll(".fa-star");
 // Open cards array
 let openCards = [];
 // Set match
-let match = 0;
+let matchCounter = 0;
 // User stars
 let threeStars = 3;
 // User click
 let click = 0;
-// User move
-let moves = 0;
 // Icon array
 let hour = 0;
 let min = 0;
@@ -29,13 +28,30 @@ let cardFaces = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-c
 
 
 
-playGame();
+document.body.onload = playGame();
 	/*
 	 * Display the cards on the page
 	 *   - shuffle the list of cards using the provided "shuffle" method below
 	 *   - loop through each card and create its HTML
 	 *   - add each card's HTML to the page
 	 */
+
+// PlayGame: Call most functions here
+function playGame() {
+	//stopTimer();
+	shuffle(cardFaces);
+	console.log(shuffle(cardFaces));
+	cardIcons();
+  //Reset all
+  moveCounter = 0;
+  move.innerHTML = moveCounter;
+  matchCounter = 0;
+  hour = 0;
+  min = 0;
+  sec = 0;
+  timer.innerHTML = `${"0 : 0"}`;
+  clearInterval(interval);
+}
 
 // Loop through each card and create its HTML
 function cardIcons() {
@@ -93,7 +109,7 @@ function checkIfNotMatched(card) {
 // Handle Game Logic
 // Deck on click
 deck.addEventListener("click", function (e) {
-	startTimer();
+	//startTimer();
   // If it is not a card/open/match get out from a function
   if(!e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
     return;
@@ -114,7 +130,6 @@ deck.addEventListener("click", function (e) {
         openCards[1].classList.add("match", "disabled");
         openCards = [];
         matchCount();
-        console.log(matchCount);
         // Check cards if not matched
       } else {
         function closeCards() {
@@ -138,10 +153,17 @@ deck.addEventListener("click", function (e) {
 
 // Match count
 function matchCount() {
-	match++;
   let ele =  document.querySelector(".overlay");
-  if(!match === 8) {
-    ele.style.display = "block";
+
+  if(moveCounter === 0) {
+    matchCounter = 0;
+    if(moveCounter >= 1) {
+      matchCounter++;
+      console.log(matchCounter);
+    }
+  }
+
+  if(matchCounter === 8) {
     ele.style.display = "none";
   }
   	else {
@@ -151,33 +173,28 @@ function matchCount() {
 
 // Move count
 function moveCount() {
-    moves++;
-    move.innerHTML = moves;
+    moveCounter++;
+    move.innerHTML = moveCounter;
+    console.log(moveCounter);
 
-    for (let i = 0; i < star.length; i++) {
-    	if(moves === 15) {
-    		let threeStars = star -= 1;
-      }
-        else if(moves === 30) {
-    		    let threeStars = star -= 1;
-        }
+    if(moveCounter === 1) {
+      moveCounter = 0;
+      move.innerHTML = moveCounter;
+      matchCounter = 0;
+      startTimer();
     }
-}
 
-// PlayGame: Call most functions here
-function playGame() {
-	//stopTimer();
-	shuffle(cardFaces);
-	console.log(shuffle(cardFaces));
-	cardIcons();
-  moves = 0;
-  move.innerHTML = 0;
-  match = 0;
-  hour = 0;
-  min = 0;
-  sec = 0;
-  timer.innerHTML = `${"0 : 0"}`;
-  clearInterval(interval);
+    // for (let i = 0; i < star.length; i--) {
+    // 	if(moves === 15) {
+    // 		//let threeStars = star[i].splice(i, 1)
+    //     //threeStars = star[i].innerHTML
+    //   }
+    //     else if(moves === 30) {
+    // 		    //let threeStars = star[i] -= 1;
+    //         //star.innerHTML = threeStars;
+    //     }
+    //   //console.log(star[i]);
+    // }
 }
 
 // Start timer function
