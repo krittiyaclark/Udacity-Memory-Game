@@ -64,63 +64,86 @@ function shuffle(array) {
 function toggleCard(card) {
   card.classList.toggle("open");
   card.classList.toggle("show");
+  debugger
 }
 
 function openCard(card) {
-  openCards.push(card);
+  openCards.push(card); debugger
 }
 
 function checkIfMatched(card) {
-  // let ifMatched = false;
-  for(let i = 0; i < openCards; i++) {
-    if(openedCards[0].firstElementChild.classList.item(1) === openedCards[1].firstElementChild.classList.item(1)) {
-      // ifMatched = true;
+   let ifMatched = false;
+    if(openCards[0] === openCards[1]) {
+      ifMatched = true;
       card.classList.toggle("match");
       card.classList.toggle("disabled");
     }
-  }
 }
 
 function checkIfNotMatched(card) {
-  if(openedCards[0].firstElementChild.classList.item(1) !== openedCards[1].firstElementChild.classList.item(1)) {
+  if(openCards[0] !== openCards[1]) {
     card.classList.toggle("unmatch");
-    card.classList.toggle("disabled");
+    card.classList.toggle("unmatch");
+    // card.classList.toggle("disabled");
   }
 }
 
 // Handle Game Logic
 // Deck on click
 deck.addEventListener("click", function (e) {
-	startTimer();
+	//startTimer();
+  if(!e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
+    return;
+  }
   // Add open & show class to li
-  toggleCard(e.target);
+  // toggleCard(e.target);
   // Push open cards to array
-  openCard(e.target);
+  //openCard(e.target);
 
-	if(click < 2) {
-		if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
-	  	console.log('Work!');
-      click += 1;
-		    if(click === 2) {
-		    	moveCount();
-		    }
-	    }
+
+	 //if(click < 2) {
+		// if(e.target.classList.contains("open") && e.target.nodeName === "LI") {
+	  // 	console.log('Work!');
+      // click += 1;
+		    //if(click === 2) {
+		    	//moveCount();
+		    //}
+
       // If cards isn't matched
-      if(openCards.length != 2 && e.target.className === "card open show") {
-        openCards.push(e.target.childNodes[0].className);
-        console.log(openCards);
-    }
-      // Check cards if matched
-	    if(openCards.length >= 2) {
-        if(checkIfMatched() === true) {
-          checkIfMatched();
-          matchCount();
-        }else {
+      //if(openCards.length <= 2) {
+        openCards.push(e.target);
+        e.target.classList.add("open", "show");
+        moveCount();
 
+      //}
+      // Check cards if matched
+	    if(openCards.length === 2) {
+
+        if(openCards[0].firstElementChild.classList[1] === openCards[1].firstElementChild.classList[1]) {
+          debugger
+          //ifMatched = true;
+          openCards[0].classList.remove("open", "show");
+          openCards[1].classList.remove("open", "show");
+          openCards[0].classList.add("match", "disabled");
+          openCards[1].classList.add("match", "disabled");
+          openCards = [];
+          matchCount();
+        } else {
+          function closeCards() {
+
+
+            setTimeout(function(){
+              openCards[0].classList.remove("open", "show");
+              openCards[1].classList.remove("open", "show");
+              openCards = [];
+            }, 500);
+          }
+          closeCards();
         }
 
 	    }
-    }
+    //}
+     //}
 
 });
 
@@ -167,7 +190,7 @@ function startTimer() {
 		}
 	}
 	timer.innerHTML = min + " : " + sec;
-	setInterval(startTimer, 1000);
+	//setInterval(startTimer, 1000);
 }
 
 // Stop timer function
