@@ -11,12 +11,12 @@ let moveCounter = 0;
 // Select stars
 let star = [].slice.call(document.querySelectorAll(".fa-star"));
 console.log(star);
+// User stars
+//star = 3;
 // Open cards array
 let openCards = [];
 // Set match
 let matchCounter = 0;
-// User stars
-let threeStars = 3;
 // Icon array
 let hour = 0;
 let min = 0;
@@ -126,8 +126,8 @@ deck.addEventListener("click", function (e) {
   e.target.classList.add("open", "show");
   moveCounter++;
   move.innerHTML = moveCounter;
-  startTimer();
   starGame();
+  startTimer();
 
     // Check cards is === 2
     if(openCards.length === 2) {
@@ -140,6 +140,7 @@ deck.addEventListener("click", function (e) {
         openCards[1].classList.add("match", "disabled");
         openCards = [];
         matchCount();
+
         // Check cards if not matched
       } else {
         function closeCards() {
@@ -182,19 +183,16 @@ function matchCount() {
   	}
 }
 
-matchCount();
 
 function starGame() {
-  if (moveCounter >= 15){
-        for(let i = 0; i < star.length; i++){
-            star.shift();
-        }
-    }
-    else if (moveCounter >= 30){
-        for(let i = 0; i < star.length; i++){
-          star.shift();
-        }
-    }
+  if (moveCounter === 15 && star[2].classList.contains("fa-star")){
+    star[2].classList.remove('fa-star');
+    star[2].classList.add('fa-star-o');
+  }
+  if (moveCounter === 30 && star[1].classList.contains("fa-star")){
+    star[1].classList.remove('fa-star');
+    star[1].classList.add('fa-star-o');
+  }
 }
 
 
