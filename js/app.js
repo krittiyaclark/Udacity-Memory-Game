@@ -9,7 +9,8 @@ let move = document.querySelector('.moves');
 // User move
 let moveCounter = 0;
 // Select stars
-let star = document.querySelectorAll(".fa-star");
+let star = [].slice.call(document.querySelectorAll(".fa-star"));
+console.log(star);
 // Open cards array
 let openCards = [];
 // Set match
@@ -50,11 +51,11 @@ function playGame() {
   sec = 0;
   timer.innerHTML = `${"0 : 0"}`;
 
-  // reset rating
-  for (var i= 0; i < star.length; i++){
-      star[i].style.color = "#FFD700";
-      star[i].style.visibility = "visible";
-  }
+  // // reset rating
+  // for (var i= 0; i < star.length; i++){
+  //     star[i].style.color = "#FFD700";
+  //     star[i].style.visibility = "visible";
+  // }
 
   clearInterval(interval);
 }
@@ -126,6 +127,7 @@ deck.addEventListener("click", function (e) {
   moveCounter++;
   move.innerHTML = moveCounter;
   startTimer();
+  starGame();
 
     // Check cards is === 2
     if(openCards.length === 2) {
@@ -155,21 +157,22 @@ deck.addEventListener("click", function (e) {
     if(matchCount >= 8) {
       setTimeout(function () {
         stopTimer();
-      }, 500);
+      }, 1000);
     }
 });
 
 // Match count
 function matchCount() {
   let ele =  document.querySelector(".overlay");
-
+  //matchCounter++;
+  // Count match cards
   if(moveCounter === 0) {
     matchCounter = 0;
-    if(moveCounter >= 1) {
-      matchCounter++;
-      console.log(matchCounter);
-    }
   }
+  else  {
+    matchCounter++;
+  }
+  console.log(matchCounter);
 
   if(matchCounter === 8) {
     ele.style.display = "none";
@@ -182,23 +185,20 @@ function matchCount() {
 matchCount();
 
 function starGame() {
-  if (moveCounter > 8 && moveCounter < 12){
-        for( i= 0; i < 3; i++){
-            if(i > 1){
-                star[i].style.visibility = "collapse";
-            }
+  if (moveCounter >= 15){
+        for(let i = 0; i < star.length; i++){
+            star.shift();
         }
     }
-    else if (moveCounter > 13){
-        for( i= 0; i < 3; i++){
-            if(i > 0){
-                star[i].style.visibility = "collapse";
-            }
+    else if (moveCounter >= 30){
+        for(let i = 0; i < star.length; i++){
+          star.shift();
         }
-    }3
+    }
 }
 
-starGame();
+
+
 // Move count
 // function moveCount() {
 //     moveCounter++;
