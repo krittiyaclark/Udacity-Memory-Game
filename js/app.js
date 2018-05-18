@@ -119,7 +119,7 @@ function checkIfNotMatched(card) {
 deck.addEventListener("click", function (e) {
 	//startTimer();
   // If it is not a card/open/match get out from a function
-  if(!e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
+  if(openCards.length === 2 | !e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
     return;
   }
 
@@ -127,8 +127,11 @@ deck.addEventListener("click", function (e) {
   e.target.classList.add("open", "show");
   moveCount();
   move.innerHTML = moveCounter;
-  startTimer();
   starGame();
+
+  if(moveCounter === 1) {
+    startTimer();
+  }
 
     // Check cards is === 2
     if(openCards.length === 2) {
