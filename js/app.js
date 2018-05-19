@@ -4,12 +4,18 @@
 let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
+let finalTimer = document.getElementById("final-timer");
+let totalTimer;
+let finalScore = document.getElementById("score");
+let finalStar = document.getElementById("star");
 // Select move
-let move = document.querySelector('.moves');
+let move = document.querySelector(".moves");
+let model =  document.querySelector(".overlay");
 // User move
 let moveCounter = 0;
 // Select stars
 let star = [].slice.call(document.querySelectorAll(".fa-star"));
+let resultStar;
 console.log(star);
  // Hold stars
 const holdstar_2 = 15;
@@ -118,7 +124,7 @@ function checkIfNotMatched(card) {
 // Deck on click
 deck.addEventListener("click", function (e) {
 	//startTimer();
-  // If it is not a card/open/match get out from a function
+  // If it is not a card/open/match get out from the function
   if(openCards.length === 2 | !e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
     return;
   }
@@ -128,7 +134,7 @@ deck.addEventListener("click", function (e) {
   moveCount();
   move.innerHTML = moveCounter;
   starGame();
-
+  // Start Timer only when moveCounter === 1
   if(moveCounter === 1) {
     startTimer();
   }
@@ -144,7 +150,7 @@ deck.addEventListener("click", function (e) {
         openCards[1].classList.add("match", "disabled");
         openCards = [];
         matchCount();
-        //win();
+
         // Check cards if not matched
       } else {
         function closeCards() {
@@ -173,7 +179,7 @@ function moveCount() {
 
 // Match count
 function matchCount() {
-  let ele =  document.querySelector(".overlay");
+  // let ele =  document.querySelector(".overlay");
   // Count match cards
   if(moveCounter === 0) {
     matchCounter = 0;
@@ -184,12 +190,9 @@ function matchCount() {
   console.log(matchCounter);
 
   if(matchCounter >= 8) {
-    ele.style.display = "block";
     setTimeout(function () {
             stopTimer();
         }, 500);
-  } else {
-    ele.style.display = "none";
   }
 }
 
@@ -223,27 +226,38 @@ function startTimer() {
         hour++;
   		}
   	}
-  }, 1000);
+  }, 500);
 }
 
 // Stop timer function
 function stopTimer() {
 	clearInterval(interval);
-	timer.innerHTML = `${"0 : 0"}`;
+	totalTimer = timer.innerHTML;
+  win();
 }
 
-// Show/Hide overlay
-// function win() {
-// 	let ele =  document.querySelector(".overlay");
-//
-//   if(matchCounter >= 8) {
-//     ele.style.display = "block";
-//     clearInterval(interval);
-//     timer.innerHTML = `${"0 : 0"}`;
-//   } else {
-//     ele.style.display = "none";
-//   }
-// }
+function starRating() {
+  let resultStar = "3";
+  if(moveCounter === holdstar_2) {
+    resultStar = "2";
+  } else if(moveCounter === holdstar_1) {
+    resultStar = "1";
+  }
+  finalStar.textContent = resultStar;
+}
+
+// Show/Hide Model
+function win() {
+  // If matchCounter >= 8 Stop Timer
+  if(matchCounter >= 8) {
+    model.classList.remove("overlay");
+    model.classList.toggle("win");
+
+    finalScore.textContent = `With: ${moveCounter} moves`;
+    starRating();
+    finalTimer.textContent = `Total Timer: ${totalTimer}`;
+  }
+}
 
 
 
