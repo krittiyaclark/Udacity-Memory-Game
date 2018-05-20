@@ -8,6 +8,7 @@ let finalTimer = document.getElementById("final-timer");
 let totalTimer;
 let finalScore = document.getElementById("score");
 let finalStar = document.getElementById("star");
+const resetGame = document.getElementById("reset");
 // Select move
 let move = document.querySelector(".moves");
 let model =  document.querySelector(".overlay");
@@ -137,8 +138,10 @@ deck.addEventListener("click", function (e) {
   starGame();
   // Start Timer only when moveCounter === 1
   if(moveCounter === 1) {
-    if(isFirstClick){
+    if(isFirstClick) {
       startTimer();
+    } else if(isFirstClick = false) {
+      startTimer() = null;
     }
   }
 
@@ -238,6 +241,10 @@ function stopTimer() {
 	totalTimer = timer.innerHTML;
   win();
 }
+
+resetGame.addEventListener("click", function () {
+  playGame();
+});
 
 function starRating() {
   let resultStar = "3";
