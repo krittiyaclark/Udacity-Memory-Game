@@ -1,6 +1,3 @@
-// Select cards
-//let card = document.querySelectorAll(".card");
-// Select deck
 let deck = document.querySelector(".deck");
 // Select timer
 let timer = document.querySelector(".timer");
@@ -15,15 +12,14 @@ const close = document.getElementById("close");
 let move = document.querySelector(".moves");
 let modal =  document.querySelector(".overlay");
 const popUp =  document.querySelector(".pop-up");
-// User move
-let moveCounter = 0;
 // Select stars
 let star = [].slice.call(document.querySelectorAll(".fa-star"));
-let starRatingResult;
-console.log(star);
- // Hold stars
-const holdstar_2 = 15;
-const holdstar_1 = 30;
+starOne = document.querySelector('#starOne');
+starTwo = document.querySelector('#starTwo');
+starThree = document.querySelector('#starThree');
+// User move
+let moveCounter = 0;
+let starNum = 3;
 // Open cards array
 let openCards = [];
 // Set match
@@ -62,6 +58,9 @@ function playGame() {
   min = 0;
   sec = 0;
   timer.innerHTML = `${min} min : sec ${sec}`;
+  starOne.style.display = "block";
+	starTwo.style.display = "block";
+	starThree.style.display = "block";
 
   // // reset rating
   // for (var i= 0; i < star.length; i++){
@@ -207,16 +206,15 @@ function matchCount() {
 
 // Star Game
 function starGame() {
-  // If moveCounter = 15 remove 1 star
-  if (moveCounter === holdstar_2 && star[2].classList.contains("fa-star")){
-    star[2].classList.remove('fa-star');
-    //console.log(starCount);
-    //star[2].classList.add('fa-star-o');
+  // If moveCounter = 15 remove 1 star and track star
+  if (moveCounter === 15){
+    starOne.style.display = "none";
+		starNum--;
   }
-  // If moveCounter = 30 remove 2 stars
-  if (moveCounter === holdstar_1 &&       star[1].classList.contains("fa-star")){
-    star[1].classList.remove('fa-star');
-    //star[1].classList.add('fa-star-o');
+  // If moveCounter = 30 remove 2 stars and track star
+  if (moveCounter === 30){
+    starTwo.style.display = "none";
+		starNum--;
   }
 }
 
@@ -226,8 +224,8 @@ min = 0;
 sec = 0;
 function startTimer() {
   interval = setInterval(function() {
-    timer.innerHTML = `${min} min : sec ${sec}`;
-    sec++;
+  timer.innerHTML = `${min} min : sec ${sec}`;
+  sec++;
   	if (sec === 60) {
   		sec = 0;
       min++;
@@ -270,7 +268,7 @@ function win() {
     modal.classList.toggle("win");
 
     finalScore.textContent = `With: ${moveCounter} moves`;
-    //starRating();
+    finalStar.textContent = `In ${starNum} star`
     finalTimer.textContent = `Total Timer: ${totalTimer}`;
     resetGame();
     closeModal();

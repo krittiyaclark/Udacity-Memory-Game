@@ -250,6 +250,12 @@ h1 {
   overflow: auto;
 }
 
+.pop-up {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .overlay {
   display: none;
   top: 0;
@@ -272,6 +278,7 @@ h1 {
 .button-choices {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex-direction: row;
 }
 
