@@ -8,7 +8,8 @@ let finalTimer = document.getElementById("final-timer");
 let totalTimer;
 let finalScore = document.getElementById("score");
 let finalStar = document.getElementById("star");
-const resetGame = document.getElementById("reset");
+const reset = document.getElementById("reset");
+const restart = document.getElementById("restart");
 // Select move
 let move = document.querySelector(".moves");
 let model =  document.querySelector(".overlay");
@@ -242,7 +243,7 @@ function stopTimer() {
   win();
 }
 
-resetGame.addEventListener("click", function () {
+reset.addEventListener("click", function () {
   playGame();
 });
 
