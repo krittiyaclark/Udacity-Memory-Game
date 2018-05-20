@@ -78,10 +78,10 @@ h1 {
 }
 
 .deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
-    -webkit-animation-name: flash;
+  cursor: default;
+  background: #02ccba;
+  font-size: 33px;
+  -webkit-animation-name: flash;
   animation-name: flash;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -90,10 +90,12 @@ h1 {
 }
 
 .deck .card.unmatched {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+  animation-name: pulse;
+  -webkit-animation-name: pulse;
+	-webkit-backface-visibility: visible !important;
+	backface-visibility: visible !important;
+	animation-duration: .75s;
+	background: #e2043b;
 }
 
 .deck .card.disabled {
@@ -116,89 +118,20 @@ h1 {
    }
 }
 
-@keyframes flash {
-   0%, 50%, 100% {
-     opacity: 1;
-   }
+@keyframes pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
 
-   25%, 75% {
-     opacity: 0;
-   }
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
 }
 
-/* @-webkit-keyframes wobble {
-  0% {
-    -webkit-transform: none;
-    transform: none;
-  }
-
-  15% {
-    -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
-    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
-  }
-
-  30% {
-    -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
-    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
-  }
-
-  45% {
-    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
-    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
-  }
-
-  60% {
-    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
-    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
-  }
-
-  75% {
-    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
-    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
-  }
-
-  100% {
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes wobble {
-  0% {
-    -webkit-transform: none;
-    transform: none;
-  }
-
-  15% {
-    -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
-    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
-  }
-
-  30% {
-    -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
-    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
-  }
-
-  45% {
-    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
-    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
-  }
-
-  60% {
-    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
-    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
-  }
-
-  75% {
-    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
-    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
-  }
-
-  100% {
-    -webkit-transform: none;
-    transform: none;
-  }
-} */
 
 /*
  * Styles for the Score Panel
@@ -233,10 +166,10 @@ h1 {
 
 .win {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  top: 33%;
+  bottom: 33%;
   right: 0;
+  left: 0;
   background-color: #fff;
   border: 9px solid #423939;
   padding: 32px;
@@ -254,6 +187,10 @@ h1 {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.pop-up i {
+  color: #02ccba;
 }
 
 .overlay {
@@ -285,5 +222,7 @@ h1 {
 .button-choices button {
   color: #fff;
   background-color: #02ccba;
+  border-radius: 5px;
+  font-size: 15px;
   padding: 9px;
 }

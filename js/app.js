@@ -1,19 +1,18 @@
-let deck = document.querySelector(".deck");
+let deck = document.querySelector('.deck');
 // Select timer
-let timer = document.querySelector(".timer");
-let finalTimer = document.getElementById("final-timer");
+let timer = document.querySelector('.timer');
+let finalTimer = document.getElementById('final-timer');
 let totalTimer;
-let finalScore = document.getElementById("score");
-let finalStar = document.getElementById("star");
-const reset = document.getElementById("reset");
-const restart = document.getElementById("restart");
-const close = document.getElementById("close");
+let finalScore = document.getElementById('score');
+let finalStar = document.getElementById('star');
+const reset = document.getElementById('reset');
+const restart = document.getElementById('restart');
 // Select move
-let move = document.querySelector(".moves");
-let modal =  document.querySelector(".overlay");
-const popUp =  document.querySelector(".pop-up");
+let move = document.querySelector('.moves');
+let modal =  document.querySelector('.overlay');
+const popUp =  document.querySelector('.pop-up');
 // Select stars
-let star = [].slice.call(document.querySelectorAll(".fa-star"));
+let star = [].slice.call(document.querySelectorAll('.fa-star'));
 starOne = document.querySelector('#starOne');
 starTwo = document.querySelector('#starTwo');
 starThree = document.querySelector('#starThree');
@@ -30,8 +29,8 @@ let hour;
 let min;
 let sec;
 let interval;
-let cardFaces = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond",
-		         "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+let cardFaces = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-diamond',
+		         'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
 
 
 
@@ -46,11 +45,9 @@ document.body.onload = playGame();
 
 // PlayGame: Call most functions here
 function playGame() {
-	//stopTimer();
 	shuffle(cardFaces);
-	console.log(shuffle(cardFaces));
 	cardIcons();
-  //Reset all
+  // Reset all
   moveCounter = 0;
   move.innerHTML = moveCounter;
   matchCounter = 0;
@@ -58,15 +55,9 @@ function playGame() {
   min = 0;
   sec = 0;
   timer.innerHTML = `${min} min : sec ${sec}`;
-  starOne.style.display = "block";
-	starTwo.style.display = "block";
-	starThree.style.display = "block";
-
-  // // reset rating
-  // for (var i= 0; i < star.length; i++){
-  //     star[i].style.color = "#FFD700";
-  //     star[i].style.visibility = "visible";
-  // }
+  starOne.style.display = 'block';
+	starTwo.style.display = 'block';
+	starThree.style.display = 'block';
 
   clearInterval(interval);
 }
@@ -74,11 +65,11 @@ function playGame() {
 // Loop through each card and create its HTML
 function cardIcons() {
 	// Clear deck
-	deck.innerHTML = "";
+	deck.innerHTML = '';
     // Add each card's HTML to the page
-    cardUi = "";
+    cardUi = '';
     for (let cardFace of cardFaces) {
-        cardUi += `<li class="card"><i class="fa ${cardFace}"></i></li>`;
+        cardUi += `<li class='card'><i class='fa ${cardFace}'></i></li>`;
     }
     deck.innerHTML = cardUi;
 }
@@ -98,45 +89,52 @@ function shuffle(array) {
     return array;
 }
 
-
+// Add open/show class to a card
 function toggleCard(card) {
-  card.classList.toggle("open");
-  card.classList.toggle("show");
+  card.classList.toggle('open');
+  card.classList.toggle('show');
 }
 
+// Push card to arrat function
 function openCard(card) {
   openCards.push(card);
 }
 
+// Check if the cards matched
 function checkIfMatched(card) {
    let ifMatched = false;
     if(openCards[0] === openCards[1]) {
       ifMatched = true;
-      card.classList.toggle("match");
-      card.classList.toggle("disabled");
+      card.classList.toggle('match');
+      card.classList.toggle('disabled');
     }
 }
 
+// Check if the cards not matched
 function checkIfNotMatched(card) {
   if(openCards[0] !== openCards[1]) {
-    card.classList.toggle("unmatch");
-    card.classList.toggle("unmatch");
+    card.classList.toggle('unmatched');
+    card.classList.toggle('unmatched');
   }
 }
 
 // Handle Game Logic
 // Deck on click
-deck.addEventListener("click", function (e) {
-	//startTimer();
+deck.addEventListener('click', function(e) {
   // If it is not a card/open/match get out from the function
-  if(openCards.length === 2 | !e.target.classList.contains("card") | e.target.classList.contains("open")| e.target.classList.contains("match")) {
+  if(openCards.length === 2 | !e.target.classList.contains('card') | e.target.classList.contains('open')| e.target.classList.contains('match')) {
     return;
   }
 
+  // Push cards in an array
   openCards.push(e.target);
-  e.target.classList.add("open", "show");
+  // Open/show cards
+  e.target.classList.add('open', 'show');
+  // Call moveCount()
   moveCount();
+  // Append move count to HTML
   move.innerHTML = moveCounter;
+  // Call starGame()
   starGame();
   // Start Timer only when moveCounter === 1
   if(moveCounter === 1) {
@@ -152,10 +150,10 @@ deck.addEventListener("click", function (e) {
       // Check cards if matched
       if(openCards[0].firstElementChild.classList[1] === openCards[1].firstElementChild.classList[1]) {
         // Add/remove class to a card
-        openCards[0].classList.remove("open", "show");
-        openCards[1].classList.remove("open", "show");
-        openCards[0].classList.add("match", "disabled");
-        openCards[1].classList.add("match", "disabled");
+        openCards[0].classList.remove('open', 'show');
+        openCards[1].classList.remove('open', 'show');
+        openCards[0].classList.add('match', 'disabled');
+        openCards[1].classList.add('match', 'disabled');
         openCards = [];
         matchCount();
 
@@ -165,38 +163,33 @@ deck.addEventListener("click", function (e) {
           // Set Timeout for slow a card from turning too fast
           setTimeout(function(){
             // Remove class to a card
-            openCards[0].classList.remove("open", "show");
-            openCards[1].classList.remove("open", "show");
+            openCards[0].classList.remove('open', 'show');
+            openCards[1].classList.remove('open', 'show');
             openCards = [];
           }, 1000);
         }
         closeCards();
       }
     }
-    // if(matchCount >= 8) {
-    //   setTimeout(function () {
-    //     stopTimer();
-    //   }, 1000);
-    // }
-});
+  });
 
+// Count move
 function moveCount() {
   moveCounter++;
-  // startTimer();
 }
 
 // Match count
 function matchCount() {
-  // let ele =  document.querySelector(".overlay");
   // Count match cards
+  // Set move count to 0
   if(moveCounter === 0) {
     matchCounter = 0;
   }
   else  {
     matchCounter++;
   }
-  console.log(matchCounter);
 
+  // If match = 8 stop timer
   if(matchCounter >= 8) {
     setTimeout(function () {
             stopTimer();
@@ -208,12 +201,12 @@ function matchCount() {
 function starGame() {
   // If moveCounter = 15 remove 1 star and track star
   if (moveCounter === 15){
-    starOne.style.display = "none";
+    starOne.style.display = 'none';
 		starNum--;
   }
   // If moveCounter = 30 remove 2 stars and track star
   if (moveCounter === 30){
-    starTwo.style.display = "none";
+    starTwo.style.display = 'none';
 		starNum--;
   }
 }
@@ -244,47 +237,31 @@ function stopTimer() {
   win();
 }
 
+// Reset the game
 function resetGame() {
-  reset.addEventListener("click", function () {
-  modal.style.display = "none";
+  // Reset on click
+  reset.addEventListener('click', function () {
+  // Stars display none
+  modal.style.display = 'none';
   playGame();
   });
 }
-
-function closeModal() {
-  close.addEventListener("click", function() {
-  modal.style.display = "none";
-  playGame();
-  });
-}
-
 
 // Show/Hide Model
 function win() {
   // If matchCounter >= 8 Stop Timer
   if(matchCounter >= 8) {
-    //modal.classList.remove("overlay");
-    modal.classList.remove("overlay");
-    modal.classList.toggle("win");
+    // The pop-up show
+    modal.classList.remove('overlay');
+    modal.classList.toggle('win');
 
+    // Append all result
     finalScore.textContent = `With: ${moveCounter} moves`;
     finalStar.textContent = `In ${starNum} star`
     finalTimer.textContent = `Total Timer: ${totalTimer}`;
     resetGame();
-    closeModal();
   }
 }
-
-
-
-
-
-
-
-// What happens when cards match
-// What happens when cards do not match
-// When the game finishes
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
