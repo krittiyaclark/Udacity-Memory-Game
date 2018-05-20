@@ -1,12 +1,13 @@
 let deck = document.querySelector('.deck');
 // Select timer
 let timer = document.querySelector('.timer');
+// Select Id
 let finalTimer = document.getElementById('final-timer');
-let totalTimer;
 let finalScore = document.getElementById('score');
 let finalStar = document.getElementById('star');
 const reset = document.getElementById('reset');
 const restart = document.getElementById('restart');
+const close = document.getElementById("close");
 // Select move
 let move = document.querySelector('.moves');
 let modal =  document.querySelector('.overlay');
@@ -29,6 +30,7 @@ let hour;
 let min;
 let sec;
 let interval;
+let totalTimer;
 let cardFaces = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-diamond',
 		         'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
 
@@ -247,6 +249,13 @@ function resetGame() {
   });
 }
 
+function closeModal() {
+  close.addEventListener("click", function() {
+  modal.style.display = "none";
+  playGame();
+  });
+}
+
 // Show/Hide Model
 function win() {
   // If matchCounter >= 8 Stop Timer
@@ -260,6 +269,7 @@ function win() {
     finalStar.textContent = `In ${starNum} star`
     finalTimer.textContent = `Total Timer: ${totalTimer}`;
     resetGame();
+    closeModal();
   }
 }
 
