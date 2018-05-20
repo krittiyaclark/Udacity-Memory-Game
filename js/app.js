@@ -24,6 +24,7 @@ const holdstar_1 = 30;
 let openCards = [];
 // Set match
 let matchCounter = 0;
+let isFirstClick = true;
 // Icon array
 let hour;
 let min;
@@ -136,7 +137,9 @@ deck.addEventListener("click", function (e) {
   starGame();
   // Start Timer only when moveCounter === 1
   if(moveCounter === 1) {
-    startTimer();
+    if(isFirstClick){
+      startTimer();
+    }
   }
 
     // Check cards is === 2
@@ -243,7 +246,7 @@ function starRating() {
   } else if(moveCounter === holdstar_1) {
     resultStar = "1";
   }
-  finalStar.textContent = resultStar;
+  finalStar.innerHTML = resultStar;
 }
 
 // Show/Hide Model
