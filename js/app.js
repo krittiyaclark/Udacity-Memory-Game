@@ -10,14 +10,16 @@ let finalScore = document.getElementById("score");
 let finalStar = document.getElementById("star");
 const reset = document.getElementById("reset");
 const restart = document.getElementById("restart");
+const close = document.getElementById("close");
 // Select move
 let move = document.querySelector(".moves");
-let model =  document.querySelector(".overlay");
+let modal =  document.querySelector(".overlay");
+const popUp =  document.querySelector(".pop-up");
 // User move
 let moveCounter = 0;
 // Select stars
 let star = [].slice.call(document.querySelectorAll(".fa-star"));
-let resultStar;
+let starRatingResult;
 console.log(star);
  // Hold stars
 const holdstar_2 = 15;
@@ -59,7 +61,7 @@ function playGame() {
   hour = 0;
   min = 0;
   sec = 0;
-  timer.innerHTML = `${"0 : 0"}`;
+  timer.innerHTML = `${min} min : sec ${sec}`;
 
   // // reset rating
   // for (var i= 0; i < star.length; i++){
@@ -208,12 +210,13 @@ function starGame() {
   // If moveCounter = 15 remove 1 star
   if (moveCounter === holdstar_2 && star[2].classList.contains("fa-star")){
     star[2].classList.remove('fa-star');
-    star[2].classList.add('fa-star-o');
+    //console.log(starCount);
+    //star[2].classList.add('fa-star-o');
   }
   // If moveCounter = 30 remove 2 stars
-  if (moveCounter === holdstar_1 && star[1].classList.contains("fa-star")){
+  if (moveCounter === holdstar_1 &&       star[1].classList.contains("fa-star")){
     star[1].classList.remove('fa-star');
-    star[1].classList.add('fa-star-o');
+    //star[1].classList.add('fa-star-o');
   }
 }
 
@@ -223,7 +226,7 @@ min = 0;
 sec = 0;
 function startTimer() {
   interval = setInterval(function() {
-    timer.innerHTML = min + " : " + sec;
+    timer.innerHTML = `${min} min : sec ${sec}`;
     sec++;
   	if (sec === 60) {
   		sec = 0;
@@ -243,30 +246,34 @@ function stopTimer() {
   win();
 }
 
-reset.addEventListener("click", function () {
+function resetGame() {
+  reset.addEventListener("click", function () {
+  modal.style.display = "none";
   playGame();
-});
-
-function starRating() {
-  let resultStar = "3";
-  if(moveCounter === holdstar_2) {
-    resultStar = "2";
-  } else if(moveCounter === holdstar_1) {
-    resultStar = "1";
-  }
-  finalStar.innerHTML = resultStar;
+  });
 }
+
+function closeModal() {
+  close.addEventListener("click", function() {
+  modal.style.display = "none";
+  playGame();
+  });
+}
+
 
 // Show/Hide Model
 function win() {
   // If matchCounter >= 8 Stop Timer
   if(matchCounter >= 8) {
-    model.classList.remove("overlay");
-    model.classList.toggle("win");
+    //modal.classList.remove("overlay");
+    modal.classList.remove("overlay");
+    modal.classList.toggle("win");
 
     finalScore.textContent = `With: ${moveCounter} moves`;
-    starRating();
+    //starRating();
     finalTimer.textContent = `Total Timer: ${totalTimer}`;
+    resetGame();
+    closeModal();
   }
 }
 

@@ -231,14 +231,8 @@ h1 {
   color: #a5b310;
 }
 
-.show-model {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .win {
-  /* position: fixed; */
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -257,15 +251,32 @@ h1 {
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-    resize: both;
-    overflow: auto;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  resize: both;
+  overflow: auto;
+}
+
+#close {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-choices {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.button-choices button {
+  color: #fff;
+  background-color: #02ccba;
+  padding: 9px;
 }
