@@ -31,9 +31,8 @@ let min;
 let sec;
 let interval;
 let totalTimer;
-let cardFaces = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-diamond',
-		         'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
-
+let cardList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
+let cardFaces = cardList.concat(cardList);
 
 
 
@@ -53,6 +52,7 @@ function playGame() {
   moveCounter = 0;
   move.innerHTML = moveCounter;
   matchCounter = 0;
+  openCards = [];
   hour = 0;
   min = 0;
   sec = 0;
