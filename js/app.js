@@ -14,9 +14,9 @@ let modal =  document.querySelector('.overlay');
 const popUp =  document.querySelector('.pop-up');
 // Select stars
 let star = [].slice.call(document.querySelectorAll('.fa-star'));
-starOne = document.querySelector('#starOne');
-starTwo = document.querySelector('#starTwo');
-starThree = document.querySelector('#starThree');
+let starOne = document.querySelector('#starOne');
+let starTwo = document.querySelector('#starTwo');
+let starThree = document.querySelector('#starThree');
 // User move
 let moveCounter = 0;
 let starNum = 3;
@@ -69,7 +69,7 @@ function cardIcons() {
 	// Clear deck
 	deck.innerHTML = '';
     // Add each card's HTML to the page
-    cardUi = '';
+    let cardUi = '';
     for (let cardFace of cardFaces) {
         cardUi += `<li class='card'><i class='fa ${cardFace}'></i></li>`;
     }
