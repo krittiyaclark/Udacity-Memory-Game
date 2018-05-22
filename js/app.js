@@ -6,14 +6,11 @@ let finalTimer = document.getElementById('final-timer');
 let finalScore = document.getElementById('score');
 let finalStar = document.getElementById('star');
 const reset = document.getElementById('reset');
-const restart = document.getElementById('restart');
 const close = document.getElementById("close");
 // Select move
 let move = document.querySelector('.moves');
 let modal =  document.querySelector('.overlay');
-const popUp =  document.querySelector('.pop-up');
 // Select stars
-let star = [].slice.call(document.querySelectorAll('.fa-star'));
 let starOne = document.querySelector('#starOne');
 let starTwo = document.querySelector('#starTwo');
 let starThree = document.querySelector('#starThree');
@@ -89,35 +86,6 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-// Add open/show class to a card
-function toggleCard(card) {
-  card.classList.toggle('open');
-  card.classList.toggle('show');
-}
-
-// Push card to arrat function
-function openCard(card) {
-  openCards.push(card);
-}
-
-// Check if the cards matched
-function checkIfMatched(card) {
-   let ifMatched = false;
-    if(openCards[0] === openCards[1]) {
-      ifMatched = true;
-      card.classList.toggle('match');
-      card.classList.toggle('disabled');
-    }
-}
-
-// Check if the cards not matched
-function checkIfNotMatched(card) {
-  if(openCards[0] !== openCards[1]) {
-    card.classList.toggle('unmatched');
-    card.classList.toggle('unmatched');
-  }
 }
 
 // Handle Game Logic
